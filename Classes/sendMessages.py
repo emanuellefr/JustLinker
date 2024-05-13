@@ -28,3 +28,21 @@ class sendEmail:
 class sendWhats:
     def avisoInstalacao(self, contato, cliente, periodo):
         return szChat.startSending(contato, 'instalacao', cliente, periodo)
+
+    def assinaturaContrato(self, contato, cliente, link_contrato):
+        return szChat.startSending(contato, 'assinatura', cliente, link_contrato)
+
+    def assinaturaContrato2(self, contato, cliente, link_contrato):
+        return szChat.startSending(contato, 'assinatura2', cliente, link_contrato)
+
+    def pesquisaSuporte(self, contato, cliente):
+        return szChat.startSending(contato, 'nps_suporte', cliente)
+
+    def pesquisaInstalacao(self, contato, cliente):
+        return szChat.startSending(contato, 'nps_suporte', cliente)
+
+    def pesquisaRelacional(self, contato, cliente):
+        return szChat.startSending(contato, 'nps_pes', cliente)
+
+    def avaliacaoNegativa(self, contato, cliente):
+        return szChat.startSending(contato, 'nps_pos', cliente)
