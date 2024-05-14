@@ -43,12 +43,13 @@ class Email:
 
             server.sendmail(self.FROM, to_list, msg.as_string())
             server.quit()
-            return True, None
+            return {'success': True, 'msg': f'Email enviado com sucesso!', 'tipo': 'email'}
         except Exception as e:
-            return False, f"Erro ao enviar e-mail: {str(e)}"
+            return {'success': False, 'msg': f'Erro ao enviar e-mail: {str(e)}', 'tipo': 'email'}
 
     def sendEmail(self, to_list, subject, body):
         return self._send_email(to_list, subject, body, simple=True)
+
     def sendEmailHTML(self, to_list, subject, body):
         return self._send_email(to_list, subject, body)
 

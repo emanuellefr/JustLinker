@@ -42,13 +42,13 @@ class SZChat:
             response.raise_for_status()
 
     def _send_message(self, contato, tipo_msg, var1, var2=None):
-        padrao_mensagens = {'instalacao': 'aviso_instalacao',
-                            'assinatura': 'contrato_assinatura_modelo1',
-                            'assinatura2': 'contrato_assinatura_modelo2',
-                            'nps_suporte': 'v3_nps_suporte',
-                            'nps_instalacao': 'v3_nps_instalacao',
-                            'nps_pes': 'v3_pes_nps',
-                            'nps_pos': 'v4_pos_nps'
+        padrao_mensagens = {'avisoInstalacao': 'aviso_instalacao',
+                            'assinaturaContrato': 'contrato_assinatura_modelo1',
+                            'assinaturaContrato2': 'contrato_assinatura_modelo2',
+                            'pesquisaSuporte': 'v3_nps_suporte',
+                            'pesquisaInstalacao': 'v3_nps_instalacao',
+                            'pesquisaRelacional': 'v3_pes_nps',
+                            'avaliacaoNegativa': 'v4_pos_nps'
                             }
         template = padrao_mensagens.get(tipo_msg)
         if not template:
@@ -68,13 +68,14 @@ class SZChat:
                   'platform_id': contato,
                   'type': 'text',
                   'close_session': '0',
-                  'hsm_placeholders[]': variaveis}
+                  'hsm_placeholders[]': [var1, var2]}
         response = requests.get(url, params=params)
         if response.ok:
             data = response.json()
-            return data['message']
+            return {'success': True, 'msg': f"{data['message']}", 'tipo': 'whatsapp', 'metodo': tipo_msg}
         else:
-            response.raise_for_status()
+            return {'success': False, 'msg': f'Erro ao enviar whatsapp: {response.raise_for_status()}',
+                    'tipo': 'whatsapp', 'metodo': tipo_msg}
 
     def startSending(self, contato, tipo_msg, variavel1, variavel2=None):
         try:

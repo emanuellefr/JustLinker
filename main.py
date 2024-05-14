@@ -1,7 +1,10 @@
 from Classes.sendMessages import sendEmail, sendWhats
+from Classes.Validation import ClientValidator
 
 send_email = sendEmail()
 send_whats = sendWhats()
+client_validator = ClientValidator()
+
 
 # variaveis básicas para teste
 destinatario = ['manu.frf2@gmail.com']
@@ -13,41 +16,35 @@ token_assinatura = '46fa4sd6f4asdfa'
 telefone = 5531991105365
 tipo_msg = 'instalacao'
 periodo = 'manhã'
-link_assinatura = f'bla bla bla {token_assinatura}'
+link_assinatura = f'http:justweb.teste.linkassinatura/{token_assinatura}'
 
 
 #Email assinatura de contrato
-email_assinatatura_contrato = send_email.assinaturaContrato(destinatario, assunto, nome_cliente, token_assinatura)
-print(email_assinatatura_contrato)
+#email_assinatatura_contrato = send_email.assinaturaContrato(destinatario, assunto, nome_cliente, token_assinatura)
+#
+# #Email envio de contrato
+# envio_contrato = send_email.envioContrato(destinatario, assunto, nome_cliente, anexo, nome_arquivo)
+#
+# #SZChat aviso instalacao
+# pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente)
 
-#Email envio de contrato
-envio_contrato = send_email.envioContrato(destinatario, assunto, nome_cliente, anexo, nome_arquivo)
-print(envio_contrato)
-
-#SZChat aviso instalacao
-pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente)
-print(pesquisa_suporte)
-
-#SZChat assinatura contrato
-assinatura_contrato = send_whats.assinaturaContrato(telefone, nome_cliente, link_assinatura)
-print(assinatura_contrato)
+# #SZChat assinatura contrato
+# assinatura_contrato = send_whats.assinaturaContrato(telefone, nome_cliente, link_assinatura)
 
 #SZChat assinatura contrato2
-assinatura_contrato2 = send_whats.assinaturaContrato2(telefone, nome_cliente, link_assinatura)
-print(assinatura_contrato2)
+# assinatura_contrato2 = send_whats.assinaturaContrato2(telefone, nome_cliente, link_assinatura)
 
-#SZChat pesquisa suporte
-pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente)
-print(pesquisa_suporte)
 
-#SZChat pesquisa instalacao
-pesquisa_instalacao = send_whats.pesquisaInstalacao(telefone, nome_cliente)
-print(pesquisa_instalacao)
 
-#SZChat pesquisa relacional
-pesquisa_relacional = send_whats.pesquisaRelacional(telefone, nome_cliente)
-print(pesquisa_instalacao)
+# #SZChat pesquisa suporte
+pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente, 654)
 
-#SZChat pesquisa negativa
-avaliacao_negativa = send_whats.avaliacaoNegativa(telefone, nome_cliente)
-print(avaliacao_negativa)
+
+# #SZChat pesquisa instalacao
+# pesquisa_instalacao = send_whats.pesquisaInstalacao(telefone, nome_cliente)
+
+# #SZChat pesquisa relacional
+# pesquisa_relacional = send_whats.pesquisaRelacional(telefone, nome_cliente)
+
+# #SZChat pesquisa negativa
+# avaliacao_negativa = send_whats.avaliacaoNegativa(telefone, nome_cliente)
