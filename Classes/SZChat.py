@@ -42,15 +42,16 @@ class SZChat:
             response.raise_for_status()
 
     def _send_message(self, contato, tipo_msg, var1, var2=None):
-        padrao_mensagens = {'avisoInstalacao': 'aviso_instalacao',
-                            'assinaturaContrato': 'contrato_assinatura_modelo1',
-                            'assinaturaContrato2': 'contrato_assinatura_modelo2',
-                            'pesquisaSuporte': 'v3_nps_suporte',
-                            'pesquisaInstalacao': 'v3_nps_instalacao',
-                            'pesquisaRelacional': 'v3_pes_nps',
-                            'avaliacaoNegativa': 'v4_pos_nps'
+        padrao_mensagens = {'avisoInstalacao': ['aviso_instalacao', '62e339084aa3e700160970bb'],
+                            'assinaturaContrato': ['contrato_assinatura_modelo1', '62e338b331519200178d6d2b'],
+                            'assinaturaContrato2': ['contrato_assinatura_modelo2', '62e338b331519200178d6d2b'],
+                            'pesquisaSuporte': ['v3_nps_suporte', '62e339084aa3e700160970bb'],
+                            'pesquisaInstalacao': ['v3_nps_instalacao', '62e339084aa3e700160970bb'],
+                            'pesquisaRelacional': ['v3_pes_nps', '62e339084aa3e700160970bb'],
+                            'avaliacaoNegativa': ['v4_pos_nps', '62e339084aa3e700160970bb']
                             }
         template = padrao_mensagens.get(tipo_msg)
+
         if not template:
             raise ValueError("Tipo de mensagem inválido")
         if var2:
@@ -61,20 +62,20 @@ class SZChat:
         url = self.BASE_URL_SZCHAT + '/message/send'
         params = {'token': self.auth_token,
                   'agent': 'conexaoapi@justweb.com.br',
-                  'channel_id': '62e339084aa3e700160970bb',
+                  'channel_id': template[1],
                   'attendance_id': '62dfda9f6dddfe2294453b13',
                   'is_hsm': '1',
-                  'hsm_template_name': template,
+                  'hsm_template_name': template[0],
                   'platform_id': contato,
                   'type': 'text',
                   'close_session': '0',
-                  'hsm_placeholders[]': [var1, var2]}
+                  'hsm_placeholders[]': variaveis}
         response = requests.get(url, params=params)
         if response.ok:
             data = response.json()
             return {'success': True, 'msg': f"{data['message']}", 'tipo': 'whatsapp', 'metodo': tipo_msg}
         else:
-            return {'success': False, 'msg': f'Erro ao enviar whatsapp: {response.raise_for_status()}',
+            return {'success': False, 'msg': f'Erro ao enviar whatsapp: {response.text}',
                     'tipo': 'whatsapp', 'metodo': tipo_msg}
 
     def startSending(self, contato, tipo_msg, variavel1, variavel2=None):
@@ -85,6 +86,8 @@ class SZChat:
                 self._get_auth_token()
             return self._send_message(contato, tipo_msg, variavel1, variavel2)
 
+        except Exception as err:
+            return err
         finally:
             self._logout()
 

@@ -37,7 +37,7 @@ class sendEmail:
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'envioContrato')
         if validator['success']:
             # CONFIGURA TEMPLATE + CORPO EMAIL
-            caminho_template = os.path.abspath('Templates/doc_contrato.html')
+            caminho_template = os.path.abspath('Templates/doc_contrato_assinado.html')
             with open(caminho_template, 'r', encoding='utf-8') as file:
                 body = file.read()
                 body = body.replace('{cliente}', cliente)
