@@ -20,11 +20,11 @@ link_assinatura = f'http:justweb.teste.linkassinatura/{token_assinatura}'
 
 
 #Email assinatura de contrato
-#email_assinatatura_contrato = send_email.assinaturaContrato(destinatario, assunto, nome_cliente, token_assinatura)
-#
+email_assinatatura_contrato = send_email.assinaturaContrato(destinatario, assunto, nome_cliente, token_assinatura, 123456)
+
 # #Email envio de contrato
-# envio_contrato = send_email.envioContrato(destinatario, assunto, nome_cliente, anexo, nome_arquivo)
-#
+# envio_contrato = send_email.envioContrato(destinatario, assunto, nome_cliente, anexo, nome_arquivo, 465464)
+
 # #SZChat aviso instalacao
 # pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente)
 
@@ -37,7 +37,7 @@ link_assinatura = f'http:justweb.teste.linkassinatura/{token_assinatura}'
 
 
 # #SZChat pesquisa suporte
-pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente, 654)
+pesquisa_suporte = send_whats.pesquisaSuporte(telefone, nome_cliente, 12356)
 
 
 # #SZChat pesquisa instalacao

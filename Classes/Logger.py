@@ -8,8 +8,10 @@ cnx_PG = conexao_BD.conexao_PGSQL()
 cursor_PG = cnx_PG.connect()
 
 class Log:
-    def new_log(self, retorno):
+    def new_log(self, retorno, os=None, contrato=None):
         if retorno['success']:
+            retorno['os'] = os
+            retorno['contrato'] = contrato
             logger.success(retorno)
             self._save_to_db(retorno)
 

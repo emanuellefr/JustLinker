@@ -7,15 +7,16 @@ class ClientValidator:
         self.cnx_PG = self.conexao_BD.conexao_PGSQL()
         self.cursor_PG = self.cnx_PG.connect()
 
-    def logs_exist_contrato(self, id_contrato):
-        query = f"SELECT COUNT(*) FROM client_table WHERE client = '{id_contrato}'"
+    def logs_exist_contrato(self, id_contrato, metodo):
+        query = (f"SELECT COUNT(*) FROM logs_justlinker "
+                 f"WHERE contrato = {id_contrato} and metodo='{metodo}' AND data_criacao > CURRENT_DATE;")
 
-        with self.cnx_PG.connect() as conn:
-            with conn.cursor() as cursor:
-                cursor.execute(query)
-                result = cursor.fetchone()[0]
+        result = self.cursor_PG.execute(query).fetchone()[0]
 
-        return result == 0
+        if result == 0:
+            return {'success': True}
+        else:
+            return {'success': False, 'msg': 'Duplicidade de requisição!', 'contrato': id_contrato, 'metodo': metodo}
 
     def logs_exist_os(self, id_os, metodo):
         query = (f"SELECT COUNT(*) FROM logs_justlinker "
