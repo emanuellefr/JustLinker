@@ -4,10 +4,25 @@ from Classes.Logger import Log
 from Classes.Validation import ClientValidator
 import inspect
 import os
+import wget
+
 
 email = Email()
 szChat = SZChat()
 log = Log()
+
+
+def pull_contract(token, contrato_id):
+    url = f'https://contrato.justwebtelecom.com.br:448/pdfs/{token}.pdf'
+    nome_arquivo = f"{contrato_id}.pdf"
+    anexo = wget.download(url, nome_arquivo)
+    return nome_arquivo, anexo
+
+
+def delete_file(filename):
+    caminho_anexo = os.path.abspath(filename)
+    print(caminho_anexo)
+    os.remove(caminho_anexo)
 
 
 class sendEmail:
@@ -33,9 +48,11 @@ class sendEmail:
             return False
 
 
-    def envioContrato(self, destinatario, assunto, cliente, anexo, nome_arquivo, contrato_id):
+    def envioContrato(self, destinatario, assunto, cliente, token, contrato_id):
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'envioContrato')
         if validator['success']:
+            nome_arquivo, anexo = pull_contract(token, contrato_id)
+
             # CONFIGURA TEMPLATE + CORPO EMAIL
             caminho_template = os.path.abspath('Templates/doc_contrato_assinado.html')
             with open(caminho_template, 'r', encoding='utf-8') as file:
@@ -45,6 +62,7 @@ class sendEmail:
             envio_contrato = email.sendEmailAnexo(destinatario, assunto, body, [(anexo, nome_arquivo)])
             envio_contrato['metodo'] = inspect.currentframe().f_code.co_name
             log.new_log(envio_contrato, contrato=contrato_id)
+            delete_file(nome_arquivo)
             return envio_contrato
         else:
             validator['tipo'] = 'email'
