@@ -30,6 +30,6 @@ link_assinatura = f"https://teste.justweb.com/{token_assinatura}"
 #
 # pesquisa_instalacao = send_whats.pesquisaInstalacao(telefone, nome_cliente, 684654)
 #
-pesquisa_relacional = send_whats.pesquisaRelacional(telefone, nome_cliente, 6197197)
+pesquisa_relacional = send_whats.pesquisaRelacional(telefone, nome_cliente, 974197)
 
 #avaliacao_negativa = send_whats.avaliacaoNegativa(telefone, nome_cliente, 123456)

@@ -3,7 +3,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from utils import SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
+from Classes.utils import SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
 
 
 class Email:

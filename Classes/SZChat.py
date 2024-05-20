@@ -1,4 +1,4 @@
-from utils import BASE_URL_SZCHAT, LOGIN_SZCHAT, SENHA_SZCHAT
+from Classes.utils import BASE_URL_SZCHAT, LOGIN_SZCHAT, SENHA_SZCHAT
 import requests
 
 

@@ -3,11 +3,11 @@ import Classes.Connect as Connect
 from loguru import logger
 from datetime import datetime
 
-conexao_BD = Connect.Conexao()
-cnx_PG = conexao_BD.conexao_PGSQL()
-cursor_PG = cnx_PG.connect()
-
 class Log:
+    def __init__(self):
+        self.conexao_BD = Connect.Conexao()
+        self.cnx_PG = self.conexao_BD.conexao_PGSQL()
+
     def new_log(self, retorno, os=None, contrato=None):
         if retorno['success']:
             retorno['os'] = os
@@ -22,5 +22,5 @@ class Log:
     def _save_to_db(self, dados):
         dados['data_criacao'] = datetime.now()
         dados = pd.DataFrame([dados])
-        dados.to_sql('logs_justlinker', schema='public', con=cnx_PG, if_exists='append', method='multi',
+        dados.to_sql('logs_justlinker', schema='public', con=self.cnx_PG, if_exists='append', method='multi',
                      index=False)
