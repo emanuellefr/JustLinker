@@ -12,7 +12,7 @@ assunto = 'Confirmamos o recebimento do aceite digital - JustWeb'
 nome_arquivo = 'teste.png'
 nome_cliente = 'Cliente Teste'
 token_assinatura = 'a78756dc87cdc6ec3ceb81b9b25bae974c54efb09d144c7c45150b6a5122513d'
-telefone = 553198211534
+telefone = 5531991105365
 tipo_msg = 'instalacao'
 periodo = 'manhã'
 link_assinatura = f"https://teste.justweb.com/{token_assinatura}"
@@ -30,6 +30,8 @@ link_assinatura = f"https://teste.justweb.com/{token_assinatura}"
 #
 # pesquisa_instalacao = send_whats.pesquisaInstalacao(telefone, nome_cliente, 684654)
 #
-pesquisa_relacional = send_whats.pesquisaRelacional(telefone, nome_cliente, 974197)
+#pesquisa_relacional = send_whats.pesquisaRelacional(telefone, nome_cliente, 974197)
 
 #avaliacao_negativa = send_whats.avaliacaoNegativa(telefone, nome_cliente, 123456)
+
+envia_boleto_sem_bloq = send_whats.enviaBoletoSemBloqueio(telefone, nome_cliente, 6546)

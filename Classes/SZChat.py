@@ -48,7 +48,8 @@ class SZChat:
                             'pesquisaSuporte': ['v3_nps_suporte', '62e339084aa3e700160970bb'],
                             'pesquisaInstalacao': ['v3_nps_instalacao', '62e339084aa3e700160970bb'],
                             'pesquisaRelacional': ['v3_pes_nps', '62e339084aa3e700160970bb'],
-                            'avaliacaoNegativa': ['v4_pos_nps', '62e338b331519200178d6d2b']
+                            'avaliacaoNegativa': ['v4_pos_nps', '62e338b331519200178d6d2b'],
+                            'enviaBoletoSemBloqueio': ['en_boleto_sem_bloqueio', '62e338b331519200178d6d2b']
                             }
         template = padrao_mensagens.get(tipo_msg)
 
