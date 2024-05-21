@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from Classes.utils import USER_PGSQL, HOST_PGSQL, PASSWORD_PGSQL, DATABASE_PGSQL
+from .utils import USER_PGSQL, HOST_PGSQL, PASSWORD_PGSQL, DATABASE_PGSQL
 
 
 class Conexao:

@@ -1,11 +1,11 @@
 import pandas as pd
-import Classes.Connect as Connect
+from .Connect import Conexao
 from loguru import logger
 from datetime import datetime
 
 class Log:
     def __init__(self):
-        self.conexao_BD = Connect.Conexao()
+        self.conexao_BD = Conexao()
         self.cnx_PG = self.conexao_BD.conexao_PGSQL()
 
     def new_log(self, retorno, os=None, contrato=None):

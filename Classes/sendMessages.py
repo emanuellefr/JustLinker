@@ -1,7 +1,7 @@
-from Classes.Email import Email
-from Classes.SZChat import SZChat
-from Classes.Logger import Log
-from Classes.Validation import ClientValidator
+from .Email import Email
+from .SZChat import SZChat
+from .Logger import Log
+from .Validation import ClientValidator
 import inspect
 import os
 import wget
@@ -29,10 +29,13 @@ class sendEmail:
     def __init__(self):
         self.client_validator = ClientValidator()
 
-    def assinaturaContrato(self, destinatario, assunto, cliente, token, contrato_id):
+    def assinaturaContrato(self, destinatario, cliente, token, contrato_id):
+        assunto = 'Assinatura de Contrato - JustWeb'
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'assinaturaContrato')
         if validator['success']:
-            caminho_template = os.path.abspath('Templates/assinatura_contrato.html')
+            parent_path = os.path.dirname(os.getcwd())
+            caminho_template = os.path.join(parent_path, 'JustLinker/Templates/assinatura_contrato.html')
+
             with open(caminho_template, 'r', encoding='utf-8') as file:
                 body = file.read()
                 body = body.replace('{cliente}', cliente)
@@ -48,7 +51,9 @@ class sendEmail:
             return False
 
 
-    def envioContrato(self, destinatario, assunto, cliente, token, contrato_id):
+    def envioContrato(self, destinatario, cliente, token, contrato_id):
+        assunto = 'Confirmamos o recebimento do aceite digital - JustWeb'
+
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'envioContrato')
         if validator['success']:
             nome_arquivo, anexo = pull_contract(token, contrato_id)
