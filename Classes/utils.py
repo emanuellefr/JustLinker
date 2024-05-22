@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 
 
 env_path = os.path.abspath('.env')
-print(env_path)
 load_dotenv(env_path)
 
 #Credenciais do banco MYSQL

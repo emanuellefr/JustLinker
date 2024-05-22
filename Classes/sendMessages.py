@@ -159,6 +159,14 @@ class sendWhats:
             return False
 
     def enviaBoletoSemBloqueio(self, contato, cliente, id_contrato):
+        """
+        Função enviaBoletoSemBloqueio.
+
+        Argumentos:
+        contato -- Telefone do cliente
+        cliente -- Nome do cliente
+        id_contrato -- ID do contrato
+        """
         validator = self.client_validator.logs_exist_contrato(id_contrato, 'enviaBoletoSemBloqueio')
         if validator['success']:
             envia_boleto_sem_bloqueio = szChat.startSending(contato, 'enviaBoletoSemBloqueio', cliente)
@@ -167,4 +175,4 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator

@@ -12,15 +12,25 @@ class Log:
         if retorno['success']:
             retorno['os'] = os
             retorno['contrato'] = contrato
+            retorno['id_log'] = self._save_to_db(retorno)
             logger.success(retorno)
-            self._save_to_db(retorno)
 
         else:
+            retorno['id_log'] = self._save_to_db(retorno)
             logger.error(retorno)
-            self._save_to_db(retorno)
 
     def _save_to_db(self, dados):
         dados['data_criacao'] = datetime.now()
+
+        if 'contrato' in dados:
+            query = f'''SELECT id FROM logs_justlinker where contrato={dados['contrato']} and data_criacao='{dados['data_criacao']}' limit 1 '''
+        elif 'os' in dados:
+            query = f'''SELECT id FROM logs_justlinker where contrato={dados['os']} and data_criacao='{dados['data_criacao']}' limit 1 '''
+
         dados = pd.DataFrame([dados])
         dados.to_sql('logs_justlinker', schema='public', con=self.cnx_PG, if_exists='append', method='multi',
                      index=False)
+
+        #BUSCA ID_LOG
+        return pd.read_sql(query, self.cnx_PG).iloc[0][0]
+
