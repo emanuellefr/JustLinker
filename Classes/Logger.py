@@ -22,10 +22,13 @@ class Log:
     def _save_to_db(self, dados):
         dados['data_criacao'] = datetime.now()
 
-        if 'contrato' in dados:
+        if 'contrato' in dados and dados['contrato'] is not None:
             query = f'''SELECT id FROM logs_justlinker where contrato={dados['contrato']} and data_criacao='{dados['data_criacao']}' limit 1 '''
-        elif 'os' in dados:
+        elif 'os' in dados and dados['os'] is not None:
             query = f'''SELECT id FROM logs_justlinker where contrato={dados['os']} and data_criacao='{dados['data_criacao']}' limit 1 '''
+        else:
+            query = f'''SELECT id FROM logs_justlinker where data_criacao='{dados['data_criacao']}' and contrato is null and os is null limit 1 '''
+
 
         dados = pd.DataFrame([dados])
         dados.to_sql('logs_justlinker', schema='public', con=self.cnx_PG, if_exists='append', method='multi',

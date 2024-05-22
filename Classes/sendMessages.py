@@ -74,6 +74,13 @@ class sendEmail:
             log.new_log(validator)
             return False
 
+    def emailBasic(self, destinatario, assunto, body):
+        email_basico = email.sendEmailHTML(destinatario, assunto, body)
+        email_basico['metodo'] = 'emailBasic'
+        log.new_log(email_basico)
+        return email_basico
+
+
 
 class sendWhats:
     def __init__(self):

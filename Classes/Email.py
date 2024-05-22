@@ -29,7 +29,7 @@ class Email:
             msg['To'] = ", ".join(to_list)
             msg['Subject'] = subject
             if simple:
-                msg.attach(MIMEText(body, 'text'))
+                msg.attach(MIMEText(body))
             else:
                 msg.attach(MIMEText(body, 'html'))
             if attachments:
