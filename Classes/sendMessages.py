@@ -30,6 +30,12 @@ class sendEmail:
         self.client_validator = ClientValidator()
 
     def assinaturaContrato(self, destinatario, cliente, token, contrato_id):
+        """Argumentos:
+           destinatario -- ['email@teste.com'] lista de emails
+           cliente -- Nome do Cliente
+           token -- Token do contrato
+           contrato_id -- Id do contrato
+        """
         assunto = 'Assinatura de Contrato - JustWeb'
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'assinaturaContrato')
         if validator['success']:
@@ -52,6 +58,12 @@ class sendEmail:
 
 
     def envioContrato(self, destinatario, cliente, token, contrato_id):
+        """Argumentos:
+           destinatario -- ['email@teste.com'] lista de emails
+           cliente -- Nome do Cliente
+           token -- Token do contrato
+           contrato_id -- Id do contrato
+        """
         assunto = 'Confirmamos o recebimento do aceite digital - JustWeb'
 
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'envioContrato')
@@ -75,6 +87,11 @@ class sendEmail:
             return False
 
     def emailBasic(self, destinatario, assunto, body):
+        """Argumentos:
+           destinatario -- ['email@teste.com'] lista de emails
+           assunto -- Assunto do email
+           body - Corpo do email
+        """
         email_basico = email.sendEmailHTML(destinatario, assunto, body)
         email_basico['metodo'] = 'emailBasic'
         log.new_log(email_basico)
@@ -87,6 +104,12 @@ class sendWhats:
         self.client_validator = ClientValidator()
 
     def avisoInstalacao(self, contato, cliente, periodo, id_os):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           periodo - Manhã ou Tarde
+           id_os -- ID da OS
+        """
         validator = self.client_validator.logs_exist_os(id_os, 'avisoInstalacao')
         if validator['success']:
             aviso_instalacao = szChat.startSending(contato, 'avisoInstalacao', cliente, periodo)
@@ -98,6 +121,12 @@ class sendWhats:
             return False
 
     def assinaturaContrato(self, contato, cliente, link_contrato, contrato_id):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           link_contrato - Link do contrato (token)
+           id_contrato -- ID do contrato
+        """
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'assinaturaContrato')
         if validator['success']:
             assinatura_contrato = szChat.startSending(contato, 'assinaturaContrato', cliente, link_contrato)
@@ -109,6 +138,12 @@ class sendWhats:
             return False
 
     def assinaturaContrato2(self, contato, cliente, link_contrato, contrato_id):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           link_contrato - Link do contrato
+           id_contrato -- ID do contrato
+        """
         validator = self.client_validator.logs_exist_contrato(contrato_id, 'assinaturaContrato2')
         if validator['success']:
             assinatura_contrato2 = szChat.startSending(contato, 'assinaturaContrato2', cliente, link_contrato)
@@ -120,6 +155,11 @@ class sendWhats:
             return False
 
     def pesquisaSuporte(self, contato, cliente, id_os):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           id_os -- ID da OS
+        """
         validator = self.client_validator.logs_exist_os(id_os, 'pesquisaSuporte')
         if validator['success']:
             pesquisa_suporte = szChat.startSending(contato, 'pesquisaSuporte', cliente)
@@ -133,6 +173,11 @@ class sendWhats:
 
 
     def pesquisaInstalacao(self, contato, cliente, id_os):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           id_os -- ID da OS
+        """
         validator = self.client_validator.logs_exist_os(id_os, 'pesquisaInstalacao')
         if validator['success']:
             pesquisa_instalacao = szChat.startSending(contato, 'pesquisaInstalacao', cliente)
@@ -144,6 +189,11 @@ class sendWhats:
             return False
 
     def pesquisaRelacional(self, contato, cliente, id_contrato):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           id_contrato -- ID do contrato
+        """
         validator = self.client_validator.logs_exist_contrato(id_contrato, 'pesquisaRelacional')
         if validator['success']:
             pesquisa_relacional = szChat.startSending(contato, 'pesquisaRelacional', cliente)
@@ -155,6 +205,11 @@ class sendWhats:
             return False
 
     def avaliacaoNegativa(self, contato, cliente, id_contrato):
+        """Argumentos:
+           contato -- Telefone do cliente
+           cliente -- Nome do cliente
+           id_contrato -- ID do contrato
+        """
         validator = self.client_validator.logs_exist_contrato(id_contrato, 'avaliacaoNegativa')
         if validator['success']:
             avaliacao_negativa = szChat.startSending(contato, 'avaliacaoNegativa', cliente)
@@ -166,8 +221,7 @@ class sendWhats:
             return False
 
     def enviaBoletoSemBloqueio(self, contato, cliente, id_contrato):
-        """
-        Função enviaBoletoSemBloqueio.
+        """Função enviaBoletoSemBloqueio.
 
         Argumentos:
         contato -- Telefone do cliente
