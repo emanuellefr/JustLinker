@@ -25,7 +25,7 @@ class Log:
         if 'contrato' in dados and dados['contrato'] is not None:
             query = f'''SELECT id FROM logs_justlinker where contrato={dados['contrato']} and data_criacao='{dados['data_criacao']}' limit 1 '''
         elif 'os' in dados and dados['os'] is not None:
-            query = f'''SELECT id FROM logs_justlinker where contrato={dados['os']} and data_criacao='{dados['data_criacao']}' limit 1 '''
+            query = f'''SELECT id FROM logs_justlinker where os={dados['os']} and data_criacao='{dados['data_criacao']}' limit 1 '''
         else:
             query = f'''SELECT id FROM logs_justlinker where data_criacao='{dados['data_criacao']}' and contrato is null and os is null limit 1 '''
 
@@ -35,5 +35,6 @@ class Log:
                      index=False)
 
         #BUSCA ID_LOG
-        return pd.read_sql(query, self.cnx_PG).iloc[0][0]
+        id = pd.read_sql(query, self.cnx_PG)
+        return id.iloc[0][0]
 

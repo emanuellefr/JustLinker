@@ -54,7 +54,7 @@ class sendEmail:
         else:
             validator['tipo'] = 'email'
             log.new_log(validator)
-            return False
+            return validator
 
 
     def envioContrato(self, destinatario, cliente, token, contrato_id):
@@ -84,7 +84,7 @@ class sendEmail:
         else:
             validator['tipo'] = 'email'
             log.new_log(validator)
-            return False
+            return validator
 
     def emailBasic(self, destinatario, assunto, body):
         """Argumentos:
@@ -118,7 +118,7 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator
 
     def assinaturaContrato(self, contato, cliente, link_contrato, contrato_id):
         """Argumentos:
@@ -135,7 +135,7 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator
 
     def assinaturaContrato2(self, contato, cliente, link_contrato, contrato_id):
         """Argumentos:
@@ -152,7 +152,7 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator
 
     def pesquisaSuporte(self, contato, cliente, id_os):
         """Argumentos:
@@ -169,7 +169,7 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator
 
 
     def pesquisaInstalacao(self, contato, cliente, id_os):
@@ -186,7 +186,7 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator
 
     def pesquisaRelacional(self, contato, cliente, id_contrato):
         """Argumentos:
@@ -218,7 +218,7 @@ class sendWhats:
         else:
             validator['tipo'] = 'whatsapp'
             log.new_log(validator)
-            return False
+            return validator
 
     def enviaBoletoSemBloqueio(self, contato, cliente, id_contrato):
         """Função enviaBoletoSemBloqueio.
