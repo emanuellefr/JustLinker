@@ -1,5 +1,7 @@
 from .utils import BASE_URL_SZCHAT, LOGIN_SZCHAT, SENHA_SZCHAT
 import requests
+import traceback
+
 
 
 class SZChat:
@@ -64,12 +66,12 @@ class SZChat:
         params = {'token': self.auth_token,
                   'agent': 'conexaoapi@justweb.com.br',
                   'channel_id': template[1],
-                  'attendance_id': '62dfda9f6dddfe2294453b13',
+                  'attendance_id': '665f181a1be2c44bbc0c6770',
                   'is_hsm': '1',
                   'hsm_template_name': template[0],
                   'platform_id': contato,
                   'type': 'text',
-                  'close_session': '0',
+                  'close_session': 3,
                   'hsm_placeholders[]': variaveis}
         response = requests.get(url, params=params)
         if response.ok:
@@ -88,7 +90,10 @@ class SZChat:
             return self._send_message(contato, tipo_msg, variavel1, variavel2)
 
         except Exception as err:
-            return err
-        # finally:
-        #     self._logout()
+            erro = (
+                f"Tipo de exceção: {type(err).__name__}\n"
+                f"Mensagem de erro: {str(err)}\n"
+                f"Traceback completo:\n{traceback.format_exc()}"
+            )
+            return erro
 

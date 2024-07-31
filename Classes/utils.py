@@ -33,3 +33,10 @@ SMTP_PASS = os.getenv("PASS_SMTP")
 BASE_URL_SZCHAT = os.getenv("BASE_URL_SZCHAT")
 LOGIN_SZCHAT = os.getenv("LOGIN_SZCHAT")
 SENHA_SZCHAT = os.getenv("PASSWORD_SZCHAT")
+
+
+#Configuração app envio email microsoft graph
+TENANT_ID = os.getenv("TENANT_ID")
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+CLIENT_SECRET_ID = os.getenv("CLIENT_SECRET_ID")

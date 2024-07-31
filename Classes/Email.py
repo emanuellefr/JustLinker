@@ -1,58 +1,108 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.base import MIMEBase
-from email import encoders
-from .utils import SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS
+import base64
+import msal
+import os
+from .utils import TENANT_ID, CLIENT_ID, CLIENT_SECRET, CLIENT_SECRET_ID
+import requests
 
 
 class Email:
     def __init__(self):
-        # Constructor com configs e credenciais de login
-        self.HOST = SMTP_HOST
-        self.PORT = SMTP_PORT
-        self.USER = SMTP_USER
-        self.PASS = SMTP_PASS
-        self.FROM = 'relatorio@justweb.com.br'
+        # APP MICROSOFT GRAPH
+        self.TENANT_ID = TENANT_ID
+        self.CLIENT_ID = CLIENT_ID
+        self.CLIENT_SECRET = CLIENT_SECRET
+        self.CLIENT_SECRET_ID = CLIENT_SECRET_ID
 
-    def _configura_servidor_smtp(self):
-        server = smtplib.SMTP(self.HOST, self.PORT)
-        server.starttls()
-        server.login(self.USER, self.PASS)
-        return server
+    def _get_token(self):
+        tenant_id = self.TENANT_ID
+        url = f'https://login.microsoftonline.com/{tenant_id}'
+        client_id = self.CLIENT_ID
+        client_secret = self.CLIENT_SECRET_ID
+        scope = ['https://graph.microsoft.com/.default']
 
-    def _send_email(self, to_list, subject, body, attachments=None, simple=None):
+        app = msal.ConfidentialClientApplication(
+            client_id,
+            authority=url,
+            client_credential=client_secret
+        )
+        token = app.acquire_token_silent(scopes=scope, account=None)
+        if not token:
+            token = app.acquire_token_for_client(scopes=scope)
+
+        if 'access_token' in token:
+            return token['access_token']
+        else:
+            return token.get('error_description')
+
+    def create_attachment(self, file_path):
+        if not os.path.exists(file_path):
+            return False
+
+        with open(file_path, "rb") as file:
+            content_bytes = file.read()
+            content_base64 = base64.b64encode(content_bytes).decode('utf-8')
+            attachment = {
+                "@odata.type": "#microsoft.graph.fileAttachment",
+                "name": file_path.split("/")[-1],
+                "contentBytes": content_base64,
+                "contentType": "application/octet-stream"
+            }
+            return attachment
+
+    def list_user(self, email):
+        token = self._get_token()
+        if not token:
+            return False
+
+        url = f'https://graph.microsoft.com/v1.0/users/{email}'
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+        response = requests.get(url, headers=headers)
+        return response.json()
+
+
+    def _send_email(self, email_id, destino, subject, body, contentType, attachments=None):
+        token = self._get_token()
+        if not token:
+            return False
+
+        url = f'https://graph.microsoft.com/v1.0/users/{email_id}/sendMail'
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+
+        message = {
+            "subject": subject,
+            "body": {
+                "contentType": contentType,
+                "content": body
+            },
+            "toRecipients": [{"emailAddress": {"address": destino}}]
+        }
+        if attachments:
+            attachments = self.create_attachment(attachments)
+            message["attachments"] = [attachments]
+
+        payload = {
+            "message": message,
+            "saveToSentItems": "true"
+        }
         try:
-            server = self._configura_servidor_smtp()
-            msg = MIMEMultipart()
-            msg['From'] = self.FROM
-            msg['To'] = ", ".join(to_list)
-            msg['Subject'] = subject
-            if simple:
-                msg.attach(MIMEText(body))
+            response = requests.post(url, headers=headers, json=payload)
+            if response.status_code == 202:
+                return {'success': True, 'msg': f'Email enviado com sucesso!', 'tipo': 'email'}
             else:
-                msg.attach(MIMEText(body, 'html'))
-            if attachments:
-                for caminho, filename in attachments:
-                    with open(caminho, 'rb') as attachment:
-                        att = MIMEBase('application', 'octet-stream')
-                        att.set_payload(attachment.read())
-                        encoders.encode_base64(att)
-                        att.add_header('Content-Disposition', f'attachment; filename = {filename}')
-                        msg.attach(att)
-
-            server.sendmail(self.FROM, to_list, msg.as_string())
-            server.quit()
-            return {'success': True, 'msg': f'Email enviado com sucesso!', 'tipo': 'email'}
+                return {'success': False, 'msg': f'Falha ao enviar o email: {response.status_code} - {response.text}',
+                        'tipo': 'email'}
         except Exception as e:
-            return {'success': False, 'msg': f'Erro ao enviar e-mail: {str(e)}', 'tipo': 'email'}
+            return {'success': False, 'msg': f'Exceção ao enviar o email: {str(e)}', 'tipo': 'email'}
 
-    def sendEmail(self, to_list, subject, body):
-        return self._send_email(to_list, subject, body, simple=True)
+    def sendEmail(self, email_id, destino, subject, body, contentType='HTML', attachments=None):
+        return self._send_email(email_id, destino, subject, body, contentType, attachments)
 
-    def sendEmailHTML(self, to_list, subject, body):
-        return self._send_email(to_list, subject, body)
-
-    def sendEmailAnexo(self, to_list, subject, body, attachments):
-        return self._send_email(to_list, subject, body, attachments)
+    def getToken(self):
+        return self._get_token()
 

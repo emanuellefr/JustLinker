@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Serviço</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #cacaca;
+            margin: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #ffffff;
+            margin: 0 auto;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .header {
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+            padding: 30px 0 0 20px;
+
+        }
+        .header h2 {
+            margin: 0;
+            color: #00517f;
+            padding: 0 0 0 20px;
+        }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 18px;
+            padding: 10px 0 0 20px;
+            width: 60%;
+        }
+        .topo {
+            background-color: #fd8a00;
+            background-image: url('http://sis.justwebtelecom.com.br:8081/avaliacao/img/ju_laranja2.png');
+            background-size: cover;
+            height: 60%;
+            border-radius: 0 20px 0 0;
+            padding: 20px 30px 40px 30px;
+
+        }
+
+        .cards{
+
+            position: relative;
+            z-index: 2;
+            padding: 0px 25px 0px 0px;
+        }
+        .card{
+            background-color: #083891;
+            background-image: url('http://sis.justwebtelecom.com.br:8081/avaliacao/img/fundo_azul.png');
+            color: white;
+            height: 60%;
+            border-radius: 0px 0px 0 30px;
+            padding: 20px 30px 25px 30px;
+            box-shadow: -4px 8px 20px 0px #0000008f;
+
+        }
+        .card h1 {
+            color: orange;
+            font-size: 20px;
+            margin: 0 0 20px;
+        }
+        .content{
+            padding: 10px;
+        }
+        .content p{
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            color: #ec6607;
+            text-shadow:1px 1px 1px #ce59375e;
+        }
+        .rating {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .rating a {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0 4px;;
+            font-size: 16px;
+            color: #ffffff;
+        }
+        .rating a:hover {
+            transform: scale(1.1); /* Zoom de 10% ao passar o mouse */
+        }
+
+        .footer {
+            background-color: #083891;
+            background-image: url('http://sis.justwebtelecom.com.br:8081/avaliacao/img/fundo_azul.png');
+            color: #f7eded;
+            padding: 20px;
+            text-align: center;
+            border-radius: 50px 50px 0px 0px;
+        }
+        .footer p {
+            margin: 0;
+            padding: 10px;
+        }
+        .footer div img {
+            max-width: 150px;
+        }
+        a img {
+            max-width: 50px;
+        }
+        @media (min-width: 400px) and (max-width: 600px) {
+            .rating{
+                display: inline-block;
+                text-align: center;
+            }
+            .topo{
+                padding: 0px 0px 35px 0px;
+                background-image: url('http://sis.justwebtelecom.com.br:8081/avaliacao/img/ju_laranja_p2.png');
+
+            }
+            .cards{
+                padding: 0px 20px 0px 0px;
+            }
+            .header {
+                padding: 20px 20px 0px 0px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .header p {
+                width: 58%;
+                font-weight: bold;
+            }
+
+        }
+        @media (max-width: 399px) {
+            .rating{
+                display: inline-block;
+                text-align: center;
+            }
+            .topo{
+                padding: 0px 0px 20px 0px;
+                background-image: url('http://sis.justwebtelecom.com.br:8081/avaliacao/img/fundo_laranja.png');
+
+            }
+            .cards{
+                padding: 0px 0px 0px 0px;
+            }
+            .header p {
+                width: 90%;
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="topo">
+                <h1>Olá, {nome_cliente}<br>tudo bem?</h1>
+                <h2>Sou a Ju da Justweb</h2>
+                <p>Adoramos ter você com a gente! Qual é a sua impressão sobre nossos serviços?</p>
+            </div>
+            <div class="ju"></div>
+
+        </div>
+        <div class="cards">
+            <div class="card">
+                <h1>Fale com a gente!</h1>
+                <p>Para garantir que estamos atendendo às suas expectativas, gostaríamos de pedir sua ajuda para uma <strong>rápida avaliação</strong> da sua experiência conosco.</p>
+            </div>
+        </div>
+        <div class="content">
+            <p>Em uma escala de 1 a 10,<br><strong> quanto você indicaria a Justweb para um amigo ou familiar?</strong></p>
+
+                <div class="rating">
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token1}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/1.png" alt="1"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token2}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/2.png" alt="2"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token3}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/3.png" alt="3"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token4}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/4.png" alt="4"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token5}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/5.png" alt="5"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token6}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/6.png" alt="6"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token7}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/7.png" alt="7"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token8}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/8.png" alt="8"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token9}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/9.png" alt="9"></a>
+                    <a href="http://sis.justwebtelecom.com.br:8081/avaliacao/comentario.php?token={token10}"><img src="http://sis.justwebtelecom.com.br:8081/avaliacao/notas/10.png" alt="10"></a>
+                </div>
+
+            <p>Após dar sua nota, você será redirecionado para uma página onde poderá deixar seu comentário.</p>
+        </div>
+
+        <div class="footer">
+            <div>
+                <p>Agradecemos antecipadamente pelo seu feedback. Ele nos ajudará a continuar melhorando nossos serviços para você.</p>
+                <strong><p>Equipe de Sucesso do Cliente JustWeb</p></strong>
+
+            </div>
+            <div>
+                <img src="https://justweb.com.br/wp-content/uploads/2023/06/Logo-Vetorizada-Branca-e-Laranja.png" alt="Logo Justweb">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
